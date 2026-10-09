@@ -1,0 +1,27 @@
+# include <stdio.h>
+int main(){
+  char op
+  float a,b,result;
+  printf("Enter operatiors(+,-,*,/):");
+  scanf("%c",&op);
+    printf("Enter two numbers:");
+  scanf("%f %f",&a,&b);
+
+  switch(op){
+    case '+':result=a=b,printf("Result=%.2f,result");
+            break;
+     case '-':result=a-b,printf("Result=%.2f,result");
+            break;
+     case '*':result=a*b,printf("Result=%.2f,result");
+            break;
+     case '/':if(b1=0){
+       result=a/b,printf("Result=%2.f result")
+     }else
+       {
+       printf("cannot divide by zero");
+       }
+       break;
+    default printf("Invalid operator");
+    }
+  return 0;
+  }
