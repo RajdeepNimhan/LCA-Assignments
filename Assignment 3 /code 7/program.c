@@ -10,6 +10,6 @@ int main()
     else if (marks >= 50) 
         printf("Grade C");
     else 
-        printf("Grade D")
+        printf("Grade D");
     return 0;
 }
