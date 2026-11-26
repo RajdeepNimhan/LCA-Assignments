@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str1[200], str2[200], ch;
+    char *ptr;
+    int choice, n, result;
+
+    printf("Enter first string: ");
+    fgets(str1, sizeof(str1), stdin);
+    str1[strcspn(str1, "\n")] = '\0';
+
+    printf("Enter second string: ");
+    fgets(str2, sizeof(str2), stdin);
+    str2[strcspn(str2, "\n")] = '\0';
+
+    do
+    {
+        printf("\n----- STRING OPERATIONS MENU -----\n");
+        printf("1. String Length (strlen)\n");
+        printf("2. String Copy (strcpy)\n");
+        printf("3. String Concatenation (strcat)\n");
+        printf("4. String Comparison (strcmp)\n");
+        printf("5. Limited String Copy (strncpy)\n");
+        printf("6. Limited Concatenation (strncat)\n");
+        printf("7. Limited Comparison (strncmp)\n");
+        printf("8. Search Character (strchr)\n");
+        printf("9. Search Last Character (strrchr)\n");
+        printf("10. Search Substring (strstr)\n");
+        printf("11. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Length = %zu\n", strlen(str1));
+                break;
+
+            case 2:
+                strcpy(str2, str1);
+                printf("Copied string = %s\n", str2);
+                break;
+
+            case 3:
+                strcat(str1, str2);
+                printf("Concatenated string = %s\n", str1);
+                break;
+
+            case 4:
+                result = strcmp(str1, str2);
+
+                if(result == 0)
+                    printf("Strings are equal\n");
+                else if(result < 0)
+                    printf("First string is smaller\n");
+                else
+                    printf("First string is greater\n");
+                break;
+
+            case 5:
+                printf("Enter number of characters: ");
+                scanf("%d", &n);
+
+                if(n >= 0 && n < 200)
+                {
+                    strncpy(str2, str1, n);
+                    str2[n] = '\0';
+                    printf("Copied string = %s\n", str2);
+                }
+                else
+                    printf("Invalid number\n");
+                break;
+
+            case 6:
+                printf("Enter number of characters: ");
+                scanf("%d", &n);
+
+                if(n >= 0 && n < 200 &&
+                   strlen(str1) + n < 200)
+                {
+                    strncat(str1, str2, n);
+                    printf("Result = %s\n", str1);
+                }
+                else
+                    printf("Invalid number or insufficient space\n");
+                break;
+
+            case 7:
+                printf("Enter number of characters: ");
+                scanf("%d", &n);
+
+                if(n >= 0)
+                {
+                    result = strncmp(str1, str2, n);
+
+                    if(result == 0)
+                        printf("Compared characters are equal\n");
+                    else
+                        printf("Strings are different\n");
+                }
+                else
+                    printf("Invalid number\n");
+                break;
+
+            case 8:
+                printf("Enter character to search: ");
+                scanf(" %c", &ch);
+
+                ptr = strchr(str1, ch);
+
+                if(ptr != NULL)
+                    printf("Character found at position %ld\n",
+                           (long)(ptr - str1 + 1));
+                else
+                    printf("Character not found\n");
+                break;
+
+            case 9:
+                printf("Enter character to search: ");
+                scanf(" %c", &ch);
+
+                ptr = strrchr(str1, ch);
+
+                if(ptr != NULL)
+                    printf("Last occurrence at position %ld\n",
+                           (long)(ptr - str1 + 1));
+                else
+                    printf("Character not found\n");
+                break;
+
+            case 10:
+                printf("Enter substring to search: ");
+                scanf("%199s", str2);
+
+                ptr = strstr(str1, str2);
+
+                if(ptr != NULL)
+                    printf("Substring found at position %ld\n",
+                           (long)(ptr - str1 + 1));
+                else
+                    printf("Substring not found\n");
+                break;
+
+            case 11:
+                printf("Exiting program...\n");
+                break;
+
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+
+    } while(choice != 11);
+
+    return 0;
+}
