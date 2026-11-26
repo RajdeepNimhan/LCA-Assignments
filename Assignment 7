@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+struct Semiconductor
+{
+    int id;
+    char type[20];
+    float Vf;
+    float Ir;
+    float Vr;
+};
+
+int main()
+{
+    struct Semiconductor d[100];
+    int n, i;
+
+    // Permissible limits
+    float maxVf = 3.0;
+    float maxIr = 10.0;
+    float maxVr = 100.0;
+
+    printf("Enter number of devices: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nEnter details of Device %d\n", i + 1);
+
+        printf("Device ID: ");
+        scanf("%d", &d[i].id);
+
+        printf("Device Type: ");
+        scanf("%19s", d[i].type);
+
+        printf("Forward Voltage (Vf): ");
+        scanf("%f", &d[i].Vf);
+
+        printf("Reverse Leakage Current (Ir) in uA: ");
+        scanf("%f", &d[i].Ir);
+
+        printf("Rated Voltage (Vr): ");
+        scanf("%f", &d[i].Vr);
+    }
+
+    printf("\n--- Semiconductor Device Report ---\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nDevice ID: %d", d[i].id);
+        printf("\nDevice Type: %s", d[i].type);
+
+        printf("\nForward Voltage: %.2f V", d[i].Vf);
+        printf("\nReverse Leakage Current: %.2f uA", d[i].Ir);
+        printf("\nRated Voltage: %.2f V", d[i].Vr);
+
+        if(d[i].Vf <= maxVf &&
+           d[i].Ir <= maxIr &&
+           d[i].Vr <= maxVr)
+        {
+            printf("\nStatus: Within Specification\n");
+        }
+        else
+        {
+            printf("\nStatus: Out of Specification\n");
+
+            if(d[i].Vf > maxVf)
+                printf("Exceeded Forward Voltage limit\n");
+
+            if(d[i].Ir > maxIr)
+                printf("Exceeded Reverse Leakage Current limit\n");
+
+            if(d[i].Vr > maxVr)
+                printf("Exceeded Rated Voltage limit\n");
+        }
+    }
+
+    return 0;
+}
