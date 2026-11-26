@@ -1,0 +1,74 @@
+#include <stdio.h>
+
+int main()
+{
+    int year, i, j, days[12];
+    int firstDay, leap;
+    char *months[] = {
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    };
+
+    // Accept year
+    printf("Enter year: ");
+    scanf("%d", &year);
+
+    // Check leap year
+    if (year % 400 == 0)
+        leap = 1;
+    else if (year % 100 == 0)
+        leap = 0;
+    else if (year % 4 == 0)
+        leap = 1;
+    else
+        leap = 0;
+
+    // Number of days in each month
+    int tempDays[] = {
+        31, 28, 31, 30, 31, 30,
+        31, 31, 30, 31, 30, 31
+    };
+
+    for (i = 0; i < 12; i++)
+        days[i] = tempDays[i];
+
+    // Adjust February for leap year
+    if (leap)
+        days[1] = 29;
+
+    // Calculate first day of January
+    long long y = year - 1;
+    long long totalDays = 365LL * y + y / 4
+                         - y / 100 + y / 400;
+
+    firstDay = (totalDays + 1) % 7;
+
+    // Display all 12 months
+    for (i = 0; i < 12; i++)
+    {
+        printf("\n\n      %s %d\n", months[i], year);
+        printf(" Sun Mon Tue Wed Thu Fri Sat\n");
+
+        // Print blank spaces before first date
+        for (j = 0; j < firstDay; j++)
+            printf("    ");
+
+        // Print dates
+        for (j = 1; j <= days[i]; j++)
+        {
+            printf("%4d", j);
+
+            if ((firstDay + j) % 7 == 0)
+                printf("\n");
+        }
+
+        // Move to the next month
+        firstDay = (firstDay + days[i]) % 7;
+
+        printf("\n");
+    }
+
+    return 0;
+}
