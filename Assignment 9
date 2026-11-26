@@ -1,0 +1,118 @@
+#include <stdio.h>
+
+struct Agriculture
+{
+    float soil_moisture;
+    float temperature;
+    float humidity;
+    float crop_health;
+    double latitude;
+    double longitude;
+};
+
+int main()
+{
+    struct Agriculture a[100];
+    FILE *fp;
+    int n, i;
+
+    char status[30];
+
+    printf("Enter number of readings: ");
+    scanf("%d", &n);
+
+    fp = fopen("monitoring_report.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("Error opening file!");
+        return 1;
+    }
+
+    fprintf(fp, "AGRICULTURAL ROBOT MONITORING REPORT\n");
+
+    for (i = 0; i < n; i++)
+    {
+        printf("\nEnter details of reading %d\n", i + 1);
+
+        printf("Enter soil moisture (%%): ");
+        scanf("%f", &a[i].soil_moisture);
+
+        printf("Enter temperature (C): ");
+        scanf("%f", &a[i].temperature);
+
+        printf("Enter humidity (%%): ");
+        scanf("%f", &a[i].humidity);
+
+        printf("Enter crop health (%%): ");
+        scanf("%f", &a[i].crop_health);
+
+        printf("Enter GPS latitude: ");
+        scanf("%lf", &a[i].latitude);
+
+        printf("Enter GPS longitude: ");
+        scanf("%lf", &a[i].longitude);
+
+        // Check agricultural conditions
+
+        if (a[i].soil_moisture < 30 ||
+            a[i].temperature > 35 ||
+            a[i].humidity < 40 ||
+            a[i].crop_health < 50)
+        {
+            sprintf(status, "Requires Attention");
+        }
+        else
+        {
+            sprintf(status, "Healthy");
+        }
+
+        // Display readings
+
+        printf("\n--- Reading %d ---\n", i + 1);
+
+        printf("Soil Moisture: %.2f%%\n",
+               a[i].soil_moisture);
+
+        printf("Temperature: %.2f C\n",
+               a[i].temperature);
+
+        printf("Humidity: %.2f%%\n",
+               a[i].humidity);
+
+        printf("Crop Health: %.2f%%\n",
+               a[i].crop_health);
+
+        printf("GPS: %.6lf, %.6lf\n",
+               a[i].latitude, a[i].longitude);
+
+        printf("Status: %s\n", status);
+
+        // Store data in file
+
+        fprintf(fp, "\nReading %d\n", i + 1);
+
+        fprintf(fp, "Soil Moisture: %.2f%%\n",
+                a[i].soil_moisture);
+
+        fprintf(fp, "Temperature: %.2f C\n",
+                a[i].temperature);
+
+        fprintf(fp, "Humidity: %.2f%%\n",
+                a[i].humidity);
+
+        fprintf(fp, "Crop Health: %.2f%%\n",
+                a[i].crop_health);
+
+        fprintf(fp, "GPS: %.6lf, %.6lf\n",
+                a[i].latitude, a[i].longitude);
+
+        fprintf(fp, "Status: %s\n", status);
+    }
+
+    fclose(fp);
+
+    printf("\nMonitoring report generated successfully!");
+
+    return 0;
+}
